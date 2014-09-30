@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Carregando o CSS do Bootstrap -->
+        <link href="_css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<script type="text/javascript" src="https://code.jquery.com/jquery.js"></script><script type="text/javascript" src="_javascript/bootstrap.min.js"></script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+<legend>formulario</legend>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="textinput">dsada</label>
+  <div class="controls">
+    <input id="textinput" name="textinput" placeholder="Rua" class="input-xlarge" type="text">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="textinput">Text Input</label>
+  <div class="controls">
+    <input id="textinput" name="textinput" placeholder="Email" class="input-xlarge" type="text">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="textinput">Text Input</label>
+  <div class="controls">
+    <input id="textinput" name="textinput" placeholder="placeholder" class="input-xlarge" type="text">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="textinput">Text Input</label>
+  <div class="controls">
+    <input id="textinput" name="textinput" placeholder="Telefone" class="input-xlarge" type="text">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="textinput">Text Input</label>
+  <div class="controls">
+    <input id="textinput" name="textinput" placeholder="Nome/Razão Social" class="input-xlarge" type="text">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="textinput">Text Input</label>
+  <div class="controls">
+    <input id="textinput" name="textinput" placeholder="Nº Residencial" class="input-xlarge" type="text">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="textinput">Text Input</label>
+  <div class="controls">
+    <input id="textinput" name="textinput" placeholder="Bairro" class="input-xlarge" type="text">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="textinput">Text Input</label>
+  <div class="controls">
+    <input id="textinput" name="textinput" placeholder="Cidade" class="input-xlarge" type="text">
+    
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="control-group">
+  <label class="control-label" for="Estado">Estado</label>
+  <div class="controls">
+    <select id="Estado" name="Estado" class="input-small">
+    </select>
+  </div>
+</div>
+
+<!-- Password input-->
+<div class="control-group">
+  <label class="control-label" for="passwordinput">Password Input</label>
+  <div class="controls">
+    <input id="passwordinput" name="passwordinput" placeholder="Senha" class="input-xlarge" type="password">
+    
+  </div>
+</div>
+
+<!-- Password input-->
+<div class="control-group">
+  <label class="control-label" for="passwordinput">Password Input</label>
+  <div class="controls">
+    <input id="passwordinput" name="passwordinput" placeholder="Repita a senha" class="input-xlarge" type="password">
+    
+  </div>
+</div>
+
+<!-- Button -->
+<div class="control-group">
+  <label class="control-label" for=""></label>
+  <div class="controls">
+    <button id="" name="" class="btn btn-inverse">Verificar Localização</button>
+  </div>
+</div>
+
+<!-- Button -->
+<div class="control-group">
+  <label class="control-label" for=""></label>
+  <div class="controls">
+    <button id="" name="" class="btn btn-info">Registre-se</button>
+  </div>
+</div>
+
+</fieldset>
+</form>
+</body>
+</html>

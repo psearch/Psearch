@@ -1,0 +1,50 @@
+@charset = "UTF-8";
+@@import url(http://fonts.googleapis.com/css?family=Quicksand);
+
+html {
+	overflow-x: hidden;
+	overflow-y: hidden;
+	width: 100%;
+	height: 100%;
+}
+
+a {
+	display: inline-block;
+	text-decoration: none;
+}
+
+body {
+	font-family: 'Quicksand', sans-serif;
+}
+
+header#topo {
+
+	max-width:auto;
+	height: 150px;
+	background: blue;
+}
+
+article#conteudo {
+	max-width:1200px;
+	height: 900px;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10%;
+	background: red;
+}
+
+ footer#rodape {
+	max-width:auto;
+	height: 150px;
+	background: green;
+	
+ }
+
+header#topo a {
+ 	background: #ffffff;
+ 	border-radius: 100px;
+ 	padding: 10px;
+ 	margin: 10px;
+ 	
+ }

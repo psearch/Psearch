@@ -1,0 +1,32 @@
+package controller;
+
+import java.sql.SQLException;
+
+import banco.BD;
+
+public class teste {
+
+	public static void main(String[] args) throws SQLException  {
+		String sql ="select  ID_categoria from categoria_prof where descricao = ? ";
+		int categoria = 0;
+		BD bd = new BD();
+		try{
+		bd.getConnection();
+		bd.st=bd.con.prepareStatement(sql);
+		bd.st.setString(1, request.getParameter("profissao"));
+		bd.rs=bd.st.executeQuery();
+		bd.rs.next();
+		categoria= bd.rs.getInt("ID_categoria");
+		XmlCreate c = new XmlCreate();
+		c.gerarXML(categoria,"J:/PsearchWK/PsearchWeb/WebContent");
+		Thread.sleep( 10 * 1000 );
+		}catch(SQLException erro){
+			System.out.println(erro.toString());
+		}
+
+			String redirectURL = "map2.jsp";
+		    response.sendRedirect(redirectURL);
+		     
+	}
+
+}

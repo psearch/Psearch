@@ -1,0 +1,73 @@
+.rating {
+	border:none;
+	height: 34px;
+background: #dac7e9; /* Old browsers */
+background: -moz-linear-gradient(left,  #dac7e9 0%, #cfbddb 47%, #c4b1cf 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,#dac7e9), color-stop(47%,#cfbddb), color-stop(100%,#c4b1cf)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(left,  #dac7e9 0%,#cfbddb 47%,#c4b1cf 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(left,  #dac7e9 0%,#cfbddb 47%,#c4b1cf 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(left,  #dac7e9 0%,#cfbddb 47%,#c4b1cf 100%); /* IE10+ */
+background: linear-gradient(to right,  #dac7e9 0%,#cfbddb 47%,#c4b1cf 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dac7e9', endColorstr='#c4b1cf',GradientType=1 ); /* IE6-9 */
+
+}
+
+.rating label {
+	text-indent: -100px;
+	width: 40px !important;
+	height: 30px;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+		
+input[type="radio"] {
+	padding-right: 4px;
+	position: absolute;
+	left: 340px;
+	margin-top: 10px;
+	display:none;
+}
+				
+input[type="radio"], .rating label.stars {
+	float: right;
+	line-height: 30px;
+	height: 30px;
+	
+}
+
+span + input[type=radio] + label, legend + input[type=radio] + label {
+	clear: right;
+	margin-right: 80px;
+	counter-reset: checkbox;
+}
+
+.rating input[type="radio"]:required + label:after {
+	content: '';
+	position: absolute;
+	left: 340px; 
+	min-height: 10px;
+	margin-top: -36px;
+	text-align: right;
+	background: #6cbf00;
+	padding: 10px 10px;
+	display: block;
+	width: 50px;
+	display:none;
+}
+
+.rating label.stars {
+	background: transparent url('../_img/star_off.png') no-repeat center center;
+}
+
+.rating label.stars:hover ~ label.stars, 
+.rating label.stars:hover, 
+.rating input[type=radio][name=stars]:checked ~ label.stars {
+	background-image: url('../_img/star.png');
+	counter-increment: checkbox;
+}
+
+.rating input[type=radio][name=stars]:required + label.stars:after {
+	content: counter(checkbox) " stars!";
+	display:none;
+}

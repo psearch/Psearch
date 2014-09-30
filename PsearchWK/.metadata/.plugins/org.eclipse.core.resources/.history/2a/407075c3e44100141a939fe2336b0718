@@ -1,0 +1,21 @@
+package controller;
+
+import java.sql.SQLException;
+
+import banco.BD;
+
+public class teste {
+
+	public static void main(String[] args) throws SQLException  {
+	
+		AvaliacaoDao a = new AvaliacaoDao();
+		a.setEmail_pessoa("jose@ma1ria.com");
+		
+		
+		
+		
+	
+	}
+
+
+}

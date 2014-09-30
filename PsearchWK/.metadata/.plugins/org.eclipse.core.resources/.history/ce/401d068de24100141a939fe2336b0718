@@ -1,0 +1,16 @@
+package controller;
+
+public class Avaliacao {
+
+	 private int ID_avaliacao;
+	 private float valor_avaliacao;
+	 private String email_pessoa;
+	
+	
+	
+	
+	
+	
+	
+	
+}

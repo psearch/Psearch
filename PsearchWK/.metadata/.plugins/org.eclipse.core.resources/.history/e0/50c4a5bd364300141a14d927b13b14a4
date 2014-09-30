@@ -1,0 +1,212 @@
+<%@page import="controller.PessoaDao"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="banco.BD"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<style>
+html, body, #map-canvas {
+	height: 30%;
+	position: relative;
+	margin: 0px;
+	padding: 0px
+}
+
+#map-canvas {
+	margin-top: -13%;
+	margin-left: 60%;
+}
+</style>
+<meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css" href="_css/estilo.css" />
+
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+<script
+	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDfmXMCQ3dfJKd_wAKe4Gh0_JmgJNKD_EY&sensor=SET_FALSE"></script>
+
+<script>
+	var geocoder;
+	var map;
+	function initialize() {
+		geocoder = new google.maps.Geocoder();
+		var latlng = new google.maps.LatLng(-34.397, 150.644);
+
+		var mapOptions = {
+			zoom : 100,
+
+			center : new google.maps.LatLng(-23.5505199, -46.63330939999997),
+
+		};
+
+		map = new google.maps.Map(document.getElementById('map-canvas'),
+				mapOptions);
+
+	}
+
+	function AparecerDiv() {
+		document.getElementById("").style.display = "block";
+
+	}
+
+	function codeAddress() {
+
+		document.getElementById("address").value = document
+				.getElementById('rua').value
+				+ " "
+				+ document.getElementById('numero').value
+				+ " "
+				+ document.getElementById('cidade').value
+				+ " "
+				+ document.getElementById('estado').value;
+
+		var address = document.getElementById('address').value;
+		geocoder.geocode({
+			'address' : address
+		}, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				map.setCenter(results[0].geometry.location);
+				marker = new google.maps.Marker({
+					map : map,
+					position : results[0].geometry.location
+
+				});
+
+			
+				document.getElementById("teste").value = map.getCenter();
+
+			
+				    document.getElementById("map-canvas").style.visibility = "visible";
+				    
+			
+				
+			}
+
+			else {
+				alert('Erro ao obter coordenadas ' + status + geocoder);
+			}
+		});
+
+		
+		
+		function armazenarDescpro() {
+			
+		}
+		
+		
+	}
+
+	google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+
+
+
+
+
+
+<title>PSearch</title>
+</head>
+<body>
+	<div id="tudo">
+
+		<header id="topo">
+		
+		
+		
+		 </header>
+<header id="menu">
+<a  class="buttons" href="inicio.html">Início</a> <a  class="buttons" href="ranking.html">Ranking</a> <a
+				href="sobreNos.html"  class="buttons" >Sobre Nós</a> <a class="buttons"  href="faleConosco.html">Fale
+				Conosco</a>
+</header>
+
+
+		<article id="conteudo">
+
+			<form action="actionCadastrojsp.jsp">
+
+				Nome/Razão Social: <input class="textbox" name="nome" type="text" value=""
+					size="30 maxlength=" 50"/><br /> E-mail: <input  class="textbox" type="email"
+					name="email" size="30" maxlength="50" /><br /> Telefone: <input class="textbox"
+					type="text" id="tel" name="tel" size="30" maxlength="50" />
+					Estado: <select  class="textbox" id='estado' name='estado'>
+					<%
+					BD bd = new BD();
+						bd.getConnection();
+						String sqluf = "select ds_uf_sigla from uf";
+						bd.st = bd.con.prepareStatement(sqluf);
+						bd.rs = bd.st.executeQuery();
+						while (bd.rs.next()) {
+							out.println("<option value =" + bd.rs.getString("ds_uf_sigla")
+									+ ">" + bd.rs.getString("ds_uf_sigla") + "</option>");
+						}
+					%>
+					</select>
+ País: <input class="textbox" type="text" id="pais" name="pais"
+					size="30" maxlength="50" /><br /> Cidade: <input type="text" class="textbox"
+					id="cidade" name="cidade" size="30" maxlength="50" /> Bairro: <input class="textbox"
+					type="text" id="bairro" name="bairro" size="30" maxlength="50" /><br />
+				CEP: <input class="textbox"  type="text" id="cep" name="cep" size="30" maxlength="50" /><br />
+				Rua: <input class="textbox" type="text" id="rua" name="rua" size="30" maxlength="50" /><br />
+				Numero: <input class="textbox" type="text" id="numero" name="num" size="30"
+					maxlength="50" /><br /> Senha: <input class="textbox"  type="password" name="senha"
+					size="30" maxlength="50" /><br /> <selec tclass="textbox"  action="cadastro.jsp"
+					name="profissao">
+					<option>Selecione uma profissão</option>
+
+
+					<%
+				
+					
+			
+						String sql = "select descricao from categoria_prof";
+						bd.st = bd.con.prepareStatement(sql);
+						bd.rs = bd.st.executeQuery();
+						while (bd.rs.next()) {
+
+							out.println("<option value=" + bd.rs.getString("descricao")
+									+ ">" + bd.rs.getString("descricao") + "</option>");
+						}
+						
+					%>
+
+
+
+
+				</select> Confirmar Senha: <input  class="textbox" type="password" name="Csenha" size="30"
+					maxlength="50" /><br /> <input class="textbox" id="address"
+					style="visibility: hidden" type="textbox">
+					
+				<!-- Campo escondido que junta os dados do endereco -->
+				<input class="textbox" type="text" id="teste" style="visibility: hidden"
+					name="teste">
+				<!-- campo escondido que armazena latitude e longitude -->
+				 <input class="textbox" type="submit" value="cadastrar" /> <input type="reset"
+					value="limpar">
+					
+			</form>
+
+
+
+
+			<div style="visibility: hidden"id="map-canvas"></div>
+
+			<button onclick="codeAddress()">Verificar endereço</button>
+
+		</article>
+
+		<footer id="rodape">
+
+			
+
+		</footer>
+
+	</div>
+	
+</body>
+</html>

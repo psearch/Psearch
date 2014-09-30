@@ -1,0 +1,52 @@
+package controller;
+
+import java.sql.SQLException;
+
+import banco.BD;
+
+public class AvaliacaoDao extends Avaliacao {
+	BD bd;
+	public AvaliacaoDao() {
+		bd= new BD();
+	}
+
+
+	public float selectValorAvaliacao(String email ){
+		float valor = 0;
+	
+		
+		bd.getConnection();
+		String sql ="insert into avaliacao (valor_avaliacao,email_pessoa) values(?,?)";
+		bd.getConnection();
+		try{
+			bd.st=bd.con.prepareStatement(sql);
+			bd.st.setFloat(1,5);
+			bd.st.setString(2,"diogodasilva5ds@gmail.com");
+			bd.st.executeUpdate();
+		}catch(SQLException erro){
+			System.out.println(erro.toString());
+		}
+				
+			
+	}
+		
+	public void avaliar(){
+	
+		
+		try{
+			String sql="insert into avaliacao (valor_avaliacao,email_pessoa) values(?,?)";
+			bd.getConnection();
+			bd.st=bd.con.prepareStatement(sql);
+			bd.st.setFloat(1, getValor_avaliacao());
+			bd.st.setString(2,getEmail_pessoa());
+			
+		}catch(SQLException erro){
+			System.out.println(erro.toString());
+		}
+		
+		
+	}
+
+
+
+}

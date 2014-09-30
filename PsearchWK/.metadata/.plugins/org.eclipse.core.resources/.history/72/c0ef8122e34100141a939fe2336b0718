@@ -1,0 +1,25 @@
+package controller;
+
+import banco.BD;
+
+public class AvaliacaoDao extends Avaliacao {
+	BD bd;
+	public AvaliacaoDao() {
+		bd= new BD();
+	}
+
+
+	public float selectValorAvaliacao(String email ){
+		float valor = 0;
+		String sql="select valor_avaliacao from avaliacao where email_pessoa = ?";
+		bd.getConnection();
+		bd.st=bd.con.prepareStatement(sql);
+
+
+		return valor;
+	}
+
+
+
+
+}

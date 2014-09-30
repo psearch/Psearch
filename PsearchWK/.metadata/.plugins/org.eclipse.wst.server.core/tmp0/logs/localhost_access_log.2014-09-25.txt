@@ -1,0 +1,9 @@
+127.0.0.1 - - [25/Sep/2014:15:30:28 -0300] "GET / HTTP/1.1" 404 951
+0:0:0:0:0:0:0:1 - - [25/Sep/2014:15:30:30 -0300] "GET /Psearch/map.jsp HTTP/1.1" 200 29893
+0:0:0:0:0:0:0:1 - - [25/Sep/2014:15:30:30 -0300] "GET /Psearch/_javascript/jquery.js HTTP/1.1" 200 247351
+0:0:0:0:0:0:0:1 - - [25/Sep/2014:15:30:32 -0300] "GET /Psearch/pontos.xml HTTP/1.1" 200 387
+0:0:0:0:0:0:0:1 - - [25/Sep/2014:15:30:39 -0300] "GET /Psearch/_img/proficon.png HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [25/Sep/2014:15:30:46 -0300] "GET /Psearch/map.jsp HTTP/1.1" 200 29893
+0:0:0:0:0:0:0:1 - - [25/Sep/2014:15:30:46 -0300] "GET /Psearch/_javascript/jquery.js HTTP/1.1" 200 247351
+0:0:0:0:0:0:0:1 - - [25/Sep/2014:15:30:49 -0300] "GET /Psearch/pontos.xml HTTP/1.1" 200 387
+0:0:0:0:0:0:0:1 - - [25/Sep/2014:15:30:49 -0300] "GET /Psearch/_img/proficon.png HTTP/1.1" 304 -

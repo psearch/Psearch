@@ -1,0 +1,37 @@
+package controller;
+
+import java.sql.SQLException;
+
+import banco.BD;
+
+public class teste {
+
+	public static void main(String[] args) throws SQLException  {
+		BD bd = new BD();
+		try{
+			String sql = "insert into categoria_prof (descricao) values (?)";
+				bd.st = bd.con.prepareStatement(sql);
+				bd.st.setString(1,(getDescricao()));
+				bd.st.executeUpdate();
+				 
+			
+			}catch(SQLException erro){
+			System.out.println("falha na conexão"+erro.toString());
+			}finally{
+			bd.close();
+			}
+				
+				
+			}else{
+				msg="falha na conexão com o banco de dados";
+			}
+		
+		
+		
+		
+		
+	
+	}
+
+
+}

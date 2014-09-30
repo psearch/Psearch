@@ -1,0 +1,84 @@
+package controller;
+
+
+import java.io.*;
+import java.sql.*;
+
+import javax.swing.JOptionPane;
+
+import org.jdom2.*;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
+
+import banco.BD;
+
+public class XmlCreate {
+public void gerarXML(int idcategoria) throws SQLException{
+		
+		BD bd = new BD();
+		if (bd.getConnection())
+		{
+			Element pontos = new Element("pontos");
+			Document documento = new Document(pontos);
+			String sql = "Select * from pessoa where Cod_tipo =2 and ID_categoria ="+idcategoria;
+			
+			bd.st=bd.con.prepareStatement(sql);
+			
+			bd.rs=bd.st.executeQuery();
+			
+			
+		
+			try {
+				while (bd.rs.next())// enquanto existir um próximo ele adciona uma nova tag ocorrencia ao arquivo
+				{
+				
+					Element oco = new Element("ocorrencia");
+					Element name = new Element("Name");
+					name.setText(bd.rs.getString(1));
+					Element latitude = new Element("Latitude");
+					latitude.setText(bd.rs.getString(11));
+					Element longitude = new Element("Longitude");
+					longitude.setText(bd.rs.getString(12));
+					oco.addContent(latitude);
+					oco.addContent(longitude);
+					oco.addContent(name);
+					pontos.addContent(oco);
+					
+				}
+
+				Format format = Format.getCompactFormat().setEncoding("ISO-8859-1"); 
+				format.setIndent("   ");
+				format.setLineSeparator("\n");
+				XMLOutputter xout = new XMLOutputter(format);
+				FileWriter arquivo = new FileWriter(new File("WebContent/pontos.xml"));
+				xout.output(documento, arquivo);
+				bd.close();
+				System.out.println("Xml gerado com êxito");;
+			}
+			catch(IOException erro){
+				JOptionPane.showMessageDialog(null,"Falha ao gerar o arquivo!"+erro.toString());
+			}   
+			catch (SQLException erro){
+				JOptionPane.showMessageDialog(null,"Erro "+erro.toString());
+			}
+		}
+		else
+		{
+			
+		}
+	}
+
+
+public static void main(String[] args) throws SQLException {
+	
+	 XmlCreate c = new XmlCreate();
+	 c.gerarXML(1);
+	
+	
+	
+	}
+}
+
+
+
+

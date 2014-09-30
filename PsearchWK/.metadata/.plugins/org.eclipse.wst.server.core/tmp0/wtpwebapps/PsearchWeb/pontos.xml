@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<pontos>
+   <ocorrencia>
+      <Profissao>Eletricista</Profissao>
+      <telefone>19992659775</telefone>
+      <mail>klebr.m.n@hotmail.com</mail>
+      <endereco>Rua Leo Amstalden, nº52, Indaiatuba - SP</endereco>
+      <Latitude>-23.1097</Latitude>
+      <Longitude>-47.2318</Longitude>
+      <Name>Kleber Nascimento</Name>
+   </ocorrencia>
+   <ocorrencia>
+      <Profissao>Eletricista</Profissao>
+      <telefone>1933182740</telefone>
+      <mail>tatata@tututu</mail>
+      <endereco>alberto santos dumont, nº1600, indaiatuba - sp</endereco>
+      <Latitude>-23.0853</Latitude>
+      <Longitude>-47.2053</Longitude>
+      <Name>luiz</Name>
+   </ocorrencia>
+</pontos>

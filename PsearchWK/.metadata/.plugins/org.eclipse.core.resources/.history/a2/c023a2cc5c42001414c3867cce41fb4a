@@ -1,0 +1,29 @@
+package controller;
+
+import java.sql.SQLException;
+
+import banco.BD;
+
+public class teste {
+
+	public static void main(String[] args) throws SQLException  {
+		BD bd = new BD();
+		String sql ="insert into avaliacao (valor_avaliacao,email_pessoa) values(?,?)";
+		bd.getConnection();
+		try{
+			bd.st=bd.con.prepareStatement(sql);
+		}catch(SQLException erro){
+			System.out.println(erro.toString());
+		}
+				
+			
+		
+		
+		
+		
+		
+	
+	}
+
+
+}

@@ -1,0 +1,762 @@
+package view;
+
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.text.ParseException;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.JToolBar;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.text.MaskFormatter;
+
+import model.BD;
+import control.PessoaDAO;
+import control.TableGradeCatPro;
+import control.TableGradeCons;
+import control.TableGradeProfissional;
+import control.TipoDao;
+
+public class MenuPrincipal extends JFrame {
+	private JPanel paneltable;
+	private JToolBar bar;
+	private BD bd;
+	private JButton btexit;
+	private Login l ;
+	private JPanel contentPane;
+	String login = null;
+	String senha = null;
+	public JPanel panel;
+	private JTabbedPane tab_1;
+
+	private JTextField txtNome;
+	private Container container;
+	private JFormattedTextField txtFone;
+	private JTextField txtEmail;
+	private JLabel lblNome;
+	private JLabel lblEmail;
+	private JLabel lblTelefone;
+	private JPasswordField txtConfirmarSenha,txtSenha;
+	private JTextField txtestado;
+	private JTextField txtcatpro;
+	private JTextField txtpesq;
+	private JScrollPane scrollPane;
+	private JScrollPane scrollPane_1;
+	private JTable t ;
+	private JTable tcons;
+	private JTable tableProfissional;
+	private JTextField txtcod;
+	private JSeparator separator_1;
+	private JTextField txtcidade;
+
+	private JLabel lblRua;
+	private JTextField txtRua;
+	private JLabel lblBairro;
+	private JTextField txtBairro;
+	private JLabel lblN;
+	private JTextField txtN;
+
+
+	public static void main(String[] args) {
+
+
+		try {
+			UIManager.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MenuPrincipal frame = new MenuPrincipal();
+					frame.setLocationRelativeTo(null);  //centralizar frame
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+
+	public MenuPrincipal() {
+		t = new JTable();
+
+		setIconImage(Toolkit.getDefaultToolkit().getImage("i\\adi_icon.png"));
+
+		setTitle("Gerenciador de  Dados");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("i\\adi_icon.png"));
+		getContentPane().setLayout(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 607, 500);
+		contentPane = new JPanel();
+		bd = new BD();
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		tab_1 = new JTabbedPane();
+		tab_1.setBounds(0, 5, 859, 433);
+
+		setResizable(false);
+
+		JPanel panel3 = new JPanel();
+
+		tab_1.add("Cadastrar categoria profissional",panel3);
+		panel3.setLayout(null);
+
+		txtcatpro = new JTextField();
+		txtcatpro.setBounds(287, 22, 258, 20);
+		panel3.add(txtcatpro);
+		txtcatpro.setColumns(10);
+
+		JLabel lblCategoriaProfissional = new JLabel("Categoria Profissional:");
+		lblCategoriaProfissional.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblCategoriaProfissional.setBounds(148, 22, 129, 18);
+		panel3.add(lblCategoriaProfissional);
+
+		JButton btsalvar = new JButton("Salvar");
+		btsalvar.setHorizontalAlignment(SwingConstants.LEFT);
+		btsalvar.setIcon(new ImageIcon("i\\save.png"));
+		btsalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btsalvar.setBounds(24, 338, 108, 38);
+		panel3.add(btsalvar);
+
+		txtpesq = new JTextField();
+		txtpesq.setColumns(10);
+		txtpesq.setBounds(24, 257, 385, 20);
+		panel3.add(txtpesq);
+
+		JButton btpesquisa = new JButton("Pesquisar");
+		btpesquisa.setIcon(new ImageIcon("i\\search2.png"));
+		btpesquisa.setBounds(443, 251, 102, 33);
+		panel3.add(btpesquisa);
+
+
+		bd.getConnection();
+		String sql="select * from categoria_prof";
+		scrollPane = new JScrollPane(TableGradeCatPro.getTable(bd, sql));
+
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(24, 86, 521, 120);
+		t = TableGradeCatPro.getTable(bd, "select * from categoria_prof");
+		scrollPane.setViewportView(t);
+
+
+		panel3.add(scrollPane);
+
+
+		JLabel lblCodigo = new JLabel("C\u00F3digo:");
+		lblCodigo.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblCodigo.setBounds(24, 22, 45, 19);
+		panel3.add(lblCodigo);
+
+
+		txtcod = new JTextField();
+		txtcod.setEnabled(false);
+		txtcod.setBounds(75, 22, 46, 20);
+		panel3.add(txtcod);
+		txtcod.setColumns(10);
+
+		separator_1 = new JSeparator();
+		separator_1.setBounds(24, 316, 521, 12);
+		panel3.add(separator_1);
+
+		if(TableGradeCatPro.v==true){	
+			t.addMouseListener(new MouseListener() {  
+
+				public void mouseClicked(MouseEvent e) {  
+
+					if(TableGradeCatPro.linhaSelecionada()>-1){
+						txtcatpro.setText(TableGradeCatPro.getDesc());
+						txtcod.setText(TableGradeCatPro.getcod());
+
+
+
+					}else{
+						JOptionPane.showMessageDialog(null,"Erro na seleção");
+
+					}
+
+				}  
+
+				public void mousePressed(MouseEvent e) {  
+
+				}  
+
+				public void mouseReleased(MouseEvent e) {  
+
+				}  
+
+				public void mouseEntered(MouseEvent e) {  
+
+				}  
+
+				public void mouseExited(MouseEvent e) {  
+
+				}  
+			});
+
+		}
+
+
+
+		btsalvar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+
+				TipoDao c = new TipoDao();
+
+				bd.getConnection();
+
+
+				c.setDescricao(MenuPrincipal.this.txtcatpro.getText());
+
+				JOptionPane.showMessageDialog(null,c.inserir());
+
+
+
+				t = TableGradeCatPro.getTable(bd, "select *  from categoria_prof");
+				scrollPane.setViewportView(t);
+
+				t.addMouseListener(new MouseListener() {  
+
+					public void mouseClicked(MouseEvent e) {  
+
+						if(TableGradeCatPro.linhaSelecionada()>-1){
+							txtcatpro.setText(TableGradeCatPro.getDesc());
+							txtcod.setText(TableGradeCatPro.getcod());
+
+						}else{
+							JOptionPane.showMessageDialog(null,"Erro na seleção");
+
+						}
+
+					}  
+
+					public void mousePressed(MouseEvent e) {  
+
+					}  
+
+					public void mouseReleased(MouseEvent e) {  
+
+					}  
+
+					public void mouseEntered(MouseEvent e) {  
+
+					}  
+
+					public void mouseExited(MouseEvent e) {  
+
+					}  
+				});
+
+
+
+			}
+		});
+
+
+		btpesquisa.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+
+				t = TableGradeCatPro.getTable(bd, "select * from categoria_prof where descricao like '"+txtpesq.getText()+"%'");
+				scrollPane.setViewportView(t);
+
+				t.addMouseListener(new MouseListener() {  
+
+					public void mouseClicked(MouseEvent e) {  
+
+						if(TableGradeCatPro.linhaSelecionada()>-1){
+							txtcatpro.setText(TableGradeCatPro.getDesc());
+							txtcod.setText(TableGradeCatPro.getcod());
+
+						}else{
+							JOptionPane.showMessageDialog(null,"Erro na seleção");
+
+						}
+
+					}  
+
+					public void mousePressed(MouseEvent e) {  
+
+					}  
+
+					public void mouseReleased(MouseEvent e) {  
+
+					}  
+
+					public void mouseEntered(MouseEvent e) {  
+
+					}  
+
+					public void mouseExited(MouseEvent e) {  
+
+					}  
+				});
+
+			}
+
+
+
+		});
+
+		// Painel consulta
+
+		JPanel panel2 = new JPanel();
+		tab_1.add("Consulta de profissionais",panel2);
+		panel2.setLayout(null);
+
+		final JTextField txtcons = new JTextField();
+		txtcons.setBounds(24, 86, 359, 22);
+		panel2.add(txtcons);
+		txtcons.setColumns(10);
+
+		final JRadioButton rbprof = new JRadioButton("Profiss\u00E3o");
+		rbprof.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		rbprof.setBounds(24, 24, 83, 23);
+		panel2.add(rbprof);
+
+		final JRadioButton rbnome = new JRadioButton("Nome");
+		rbnome.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		rbnome.setBounds(143, 24, 83, 23);
+		panel2.add(rbnome);
+
+		final JRadioButton rbcidade = new JRadioButton("Cidade");
+		rbcidade.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		rbcidade.setBounds(373, 24, 83, 23);
+		panel2.add(rbcidade);
+
+		final JRadioButton rbbairro = new JRadioButton("Bairro");
+		rbbairro.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		rbbairro.setBounds(470, 24, 75, 23);
+		panel2.add(rbbairro);
+
+		final JRadioButton rbestado = new JRadioButton("Estado");
+		rbestado.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		rbestado.setBounds(255, 24, 83, 23);
+		panel2.add(rbestado);
+
+		bd.getConnection();
+		String sqlc="select * from pessoa";
+		scrollPane_1 = new JScrollPane(TableGradeCons.getTable(bd, sqlc));
+
+
+		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane_1.setBounds(24, 147, 521, 120);
+		//colocar inner join, modifiquei os campos que aparecem na tabela adcionando cidade e estado e removendo cod_tipo
+		tcons = TableGradeCons.getTable(bd, "select p.nome_razsocial,p.email,p.cidade,p.estado,c.descricao from pessoa p,categoria_prof c where p.ID_categoria=c.ID_categoria");
+		scrollPane_1.setViewportView(tcons);
+
+		panel2.add(scrollPane_1);
+
+		JSeparator separator_6 = new JSeparator();
+		separator_6.setBounds(24, 317, 521, 12);
+		panel2.add(separator_6);
+
+		JButton btncons = new JButton("Consultar");
+		btncons.setIcon(new ImageIcon("i\\search.png"));
+		btncons.setHorizontalAlignment(SwingConstants.RIGHT);
+		btncons.setBounds(443, 78, 102, 38);
+		panel2.add(btncons);
+		
+		JButton btremove = new JButton("Remover");
+		btremove.setHorizontalAlignment(SwingConstants.LEFT);
+		btremove.setIcon(new ImageIcon("F:\\PsearchWK\\PsearchAdm\\i\\Remove.png"));
+		btremove.setBounds(23, 338, 134, 38);
+		panel2.add(btremove);
+
+
+		//Radiobuttons do painel consulta
+
+
+		rbprof.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(rbprof.isSelected()){
+					rbestado.setSelected(false);
+					rbbairro.setSelected(false);
+					rbcidade.setSelected(false);
+					rbnome.setSelected(false);
+				}
+			}
+		});
+
+		rbnome.addActionListener( new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(rbnome.isSelected()){
+					rbestado.setSelected(false);
+					rbcidade.setSelected(false);
+					rbprof.setSelected(false);
+					rbbairro.setSelected(false);
+
+				}
+
+			}
+		});
+
+		rbestado.addActionListener( new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(rbestado.isSelected()){
+					rbbairro.setSelected(false);
+					rbcidade.setSelected(false);
+					rbprof.setSelected(false);
+					rbnome.setSelected(false);
+
+				}
+
+			}
+		});
+
+		rbcidade.addActionListener( new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(rbcidade.isSelected()){
+					rbestado.setSelected(false);
+					rbbairro.setSelected(false);
+					rbprof.setSelected(false);
+					rbnome.setSelected(false);
+
+				}
+
+			}
+
+		});
+
+
+		rbbairro.addActionListener( new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(rbbairro.isSelected()){
+					rbestado.setSelected(false);
+					rbcidade.setSelected(false);
+					rbprof.setSelected(false);
+					rbnome.setSelected(false);
+
+
+				}
+
+			}
+		});		
+
+
+
+		// Botão consultar do painel consulta
+
+
+		btncons.addActionListener(new ActionListener() {
+			//colocar inner join, modifiquei os campos que aparecem na tabela adcionando cidade e estado e removendo cod_tipo
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(rbcidade.isSelected()){
+					tcons = TableGradeCons.getTable(bd, "select p.nome_razsocial,p.email,p.cidade,p.estado,c.descricao from pessoa p,categoria_prof c where p.ID_categoria=c.ID_categoria and cidade like '"+txtcons.getText()+"%'");
+				}
+				//colocar inner join, modifiquei os campos que aparecem na tabela adcionando cidade e estado e removendo cod_tipo
+				else if(rbbairro.isSelected()){			
+					tcons = TableGradeCons.getTable(bd, "select p.nome_razsocial,p.email,p.cidade,p.estado,c.descricao from pessoa p,categoria_prof c where p.ID_categoria=c.ID_categoria and bairro like '"+txtcons.getText()+"%'");
+
+				}
+				//colocar inner join, modifiquei os campos que aparecem na tabela adcionando cidade e estado e removendo cod_tipo
+				else if(rbestado.isSelected()){
+					tcons = TableGradeCons.getTable(bd, "select p.nome_razsocial,p.email,p.cidade,p.estado,c.descricao from pessoa p,categoria_prof c where p.ID_categoria=c.ID_categoria and estado like '"+txtcons.getText()+"%'");
+
+				}
+				//colocar inner join, modifiquei os campos que aparecem na tabela adcionando cidade e estado e removendo cod_tipo
+				else if(rbnome.isSelected()){
+					tcons = TableGradeCons.getTable(bd, "select p.nome_razsocial,p.email,p.cidade,p.estado,c.descricao from pessoa p,categoria_prof c where p.ID_categoria=c.ID_categoria and nome_razsocial like '"+txtcons.getText()+"%'");
+
+				}
+				//colocar inner join, modifiquei os campos que aparecem na tabela adcionando cidade e estado e removendo cod_tipo
+				else if(rbprof.isSelected()){
+					tcons = TableGradeCons.getTable(bd, "select p.nome_razsocial,p.email,p.cidade,p.estado,c.descricao from pessoa p,categoria_prof c where p.ID_categoria=c.ID_categoria and descricao like '"+txtcons.getText()+"%'");
+
+				}
+				scrollPane_1.setViewportView(tcons);
+
+				tcons.addMouseListener(new MouseListener() {  
+
+					public void mouseClicked(MouseEvent e) {  
+
+						if(TableGradeCons.linhaSelecionada()>-1){
+							txtcons.setText(TableGradeCons.getCid());
+
+
+
+						}else{
+							JOptionPane.showMessageDialog(null,"Erro na seleção");
+
+						}
+
+					}  
+
+					public void mousePressed(MouseEvent e) {  
+
+					}  
+
+					public void mouseReleased(MouseEvent e) {  
+
+					}  
+
+					public void mouseEntered(MouseEvent e) {  
+
+					}  
+
+					public void mouseExited(MouseEvent e) {  
+
+					}  
+				});
+
+			}
+
+		});
+
+
+		JPanel panel1 = new JPanel();
+
+		panel = new JPanel();
+
+
+		tab_1.add("Cadastro de administrador", panel);
+		panel.setLayout(null);
+
+		txtNome = new JTextField();
+		txtNome.setBounds(54, 20, 302, 20);
+		panel.add(txtNome);
+		txtNome.setColumns(10);
+		MaskFormatter format = null; 
+		try {
+			format=new MaskFormatter("(##)####-####");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		txtFone = new JFormattedTextField(format);
+		txtFone.setColumns(10);
+		txtFone.setBounds(430, 20, 154, 20);
+		panel.add(txtFone);
+
+		txtEmail = new JTextField();
+		txtEmail.setColumns(10);
+		txtEmail.setBounds(54, 174, 281, 20);
+		panel.add(txtEmail);
+
+		lblNome = new JLabel("Nome:");
+		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNome.setBounds(10, 22, 46, 14);
+		panel.add(lblNome);
+
+		lblEmail = new JLabel("E-mail:");
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblEmail.setBounds(10, 176, 46, 14);
+		panel.add(lblEmail);
+
+		lblTelefone = new JLabel("Telefone:");
+		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblTelefone.setBounds(373, 22, 57, 14);
+		panel.add(lblTelefone);
+
+		JLabel lblCidade = new JLabel("Cidade:");
+		lblCidade.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblCidade.setBounds(10, 70, 46, 14);
+		panel.add(lblCidade);
+
+		JLabel lblSenha = new JLabel("Senha:");
+		lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblSenha.setBounds(10, 225, 46, 20);
+		panel.add(lblSenha);
+
+		txtConfirmarSenha = new JPasswordField();
+		txtConfirmarSenha.setBounds(390, 226, 194, 20);
+		panel.add(txtConfirmarSenha);
+
+		txtestado = new JTextField();
+		txtestado.setColumns(10);
+		txtestado.setBounds(309, 68, 46, 20);
+		panel.add(txtestado);
+
+		JLabel lblEstado = new JLabel("Estado:");
+		lblEstado.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblEstado.setBounds(253, 67, 46, 20);
+		panel.add(lblEstado);
+
+		bd.getConnection();
+		String sqlprofissional = "select nome_razsocial,email,tel_cel from pessoa";
+
+		tableProfissional=TableGradeProfissional.getTable(bd, sqlprofissional);
+
+		final JButton btsave = new JButton("Salvar");
+		btsave.setHorizontalAlignment(SwingConstants.LEFT);
+		btsave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btsave.setIcon(new ImageIcon("i\\save.png"));
+		btsave.setBounds(28, 338, 108, 38);
+		panel.add(btsave);
+
+		txtcidade = new JTextField();
+		txtcidade.setBounds(54, 68, 189, 20);
+		panel.add(txtcidade);
+		txtcidade.setColumns(10);
+
+		txtSenha = new JPasswordField();
+		txtSenha.setBounds(54, 226, 175, 20);
+		panel.add(txtSenha);
+		txtSenha.setColumns(10);
+
+		JLabel lblConfirmarSenha = new JLabel("Confirmar senha:");
+		lblConfirmarSenha.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblConfirmarSenha.setBounds(281, 228, 110, 14);
+		panel.add(lblConfirmarSenha);
+
+		lblRua = new JLabel("Rua:");
+		lblRua.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblRua.setBounds(10, 123, 46, 14);
+		panel.add(lblRua);
+
+
+
+
+		txtRua = new JTextField();
+		txtRua.setBounds(54, 121, 302, 20);
+		panel.add(txtRua);
+		txtRua.setColumns(10);
+
+		lblBairro = new JLabel("Bairro:");
+		lblBairro.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblBairro.setBounds(366, 70, 46, 14);
+		panel.add(lblBairro);
+
+		txtBairro = new JTextField();
+		txtBairro.setBounds(409, 68, 175, 20);
+		panel.add(txtBairro);
+		txtBairro.setColumns(10);
+
+		lblN = new JLabel("N\u00B0");
+		lblN.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblN.setBounds(366, 123, 46, 14);
+		panel.add(lblN);
+
+		txtN = new JTextField();
+		txtN.setBounds(409, 120, 86, 20);
+		panel.add(txtN);
+		txtN.setColumns(10);
+
+		JSeparator separator_3 = new JSeparator();
+		separator_3.setBounds(24, 317, 521, 12);
+		panel.add(separator_3);
+
+
+
+		panel = new JPanel();
+		panel.setBounds(2, 50, 861, 417);
+		panel.setLayout(null);
+		panel.add(tab_1);
+
+		contentPane.add(panel);
+
+
+
+		JSeparator separator = new JSeparator();
+
+		contentPane.add(separator);
+
+
+		bar = new JToolBar(BorderLayout.LINE_END);
+		bar.setBounds(524, 1, 79, 37);
+		contentPane.add(bar);
+		bar.setRollover(true);
+		btexit=new JButton("Sair", new ImageIcon("i/logout.png"));
+		bar.add(btexit);
+		bar.setFloatable(false);
+
+
+
+		btexit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String[] op = {"Sim", "Não"};
+				int i =JOptionPane.showOptionDialog(null, "Deseja mesmo sair ?", "Sair?", JOptionPane.YES_NO_OPTION,0, new ImageIcon("i/question.png"), op, null);
+				if(i==JOptionPane.YES_OPTION){
+					setVisible(false);
+					l = new Login();
+					l.setLocationRelativeTo(null);  
+					l.setVisible(true);		
+				}
+			}
+		} );
+
+		btsave.addActionListener( new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+
+				if(!txtSenha.getText().equals(txtConfirmarSenha.getText())){
+					JOptionPane.showMessageDialog(null, "As senhas são diferentes!");
+
+				}
+				else{
+					PessoaDAO p = new PessoaDAO();
+					p.setNome_razsocial(txtNome.getText());
+					p.setRua(txtRua.getText());
+					p.setBairro(txtBairro.getText());
+					p.setCidade(txtcidade.getText());
+					p.setPais("Brasil");
+					p.setTel_cel(txtFone.getText());
+					p.setCod_tipo(51);
+					p.setCod_tipo(1);
+					p.setEmail(txtEmail.getText());
+					p.setEstado(txtestado.getText());
+					p.setNum(Integer.parseInt(txtN.getText()));
+					p.setSenha(txtSenha.getText());
+					JOptionPane.showMessageDialog(null,p.inserir());
+					
+					txtBairro.setText("");
+					txtcidade.setText("");
+					txtConfirmarSenha.setText("");
+					txtEmail.setText("");
+					txtestado.setText("");
+					txtFone.setText("");
+					txtNome.setText("");
+					txtBairro.setText("");
+					txtSenha.setText("");
+					txtN.setText("");
+
+
+
+				}
+			}
+		});
+
+	}
+}

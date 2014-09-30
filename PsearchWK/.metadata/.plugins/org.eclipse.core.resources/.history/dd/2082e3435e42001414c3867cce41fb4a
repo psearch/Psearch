@@ -1,0 +1,32 @@
+package controller;
+
+import java.sql.SQLException;
+
+import banco.BD;
+
+public class teste {
+
+	public static void main(String[] args) throws SQLException  {
+		BD bd = new BD();
+		String sql ="insert into avaliacao (valor_avaliacao,email_pessoa) values(?,?)";
+		bd.getConnection();
+		try{
+			bd.st=bd.con.prepareStatement(sql);
+			bd.st.setFloat(1, 5);
+			bd.st.setString(2,"diogodasilva5ds@gmail.com");
+			bd.st.executeUpdate();
+		}catch(SQLException erro){
+			System.out.println(erro.toString());
+		}
+				
+			
+		
+		
+		
+		
+		
+	
+	}
+
+
+}

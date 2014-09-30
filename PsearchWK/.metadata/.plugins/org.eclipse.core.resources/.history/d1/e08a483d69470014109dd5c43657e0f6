@@ -1,0 +1,23 @@
+package controller;
+
+import java.sql.SQLException;
+
+import banco.BD;
+
+public class teste {
+
+	public static void main(String[] args) throws SQLException  {
+		BD bd = new BD();
+		String selectRanking = "select nome_razsocial, sum(valor_avaliacao)"
+    			+"from pessoa,avaliacao"
+    			+"where avaliacao.email_pessoa = pessoa.email"
+    			+"and pessoa.ID_categoria= 1"
+    			+"group by(nome_razsocial)";
+                bd.st=bd.con.prepareStatement(selectRanking);
+                bd.rs=bd.st.executeQuery();
+		
+	
+	}
+
+
+}

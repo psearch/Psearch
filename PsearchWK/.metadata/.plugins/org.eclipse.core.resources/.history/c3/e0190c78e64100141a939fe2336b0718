@@ -1,0 +1,47 @@
+package controller;
+
+import java.sql.SQLException;
+
+import banco.BD;
+
+public class teste {
+
+	public static void main(String[] args) throws SQLException  {
+		BD bd = new BD();
+		try{
+			String sql="insert into pessoa  ("
+				/*1*/	+ "email "
+				/*2*/	+ ",nome_razsocial"
+				/*3*/	+ " ,tel_cel "
+				/*4*/	+ ",pais "
+				/*5*/	+ ",estado"
+				/*6*/	+ " ,cidade"
+				/*7*/	+ " ,bairro"
+				/*8*/	+ " ,cep "
+				/*9*/	+ ",rua "
+				/*10*/	+ ",num"
+				/*11*/	+ " ,latitude"
+				/*12*/	+ " ,longitude "
+				/*13*/	+ ",senha"
+				/*14*/	+ " ,foto"
+				/*15*/	+ " ,Cod_tipo"
+				/*16*/	+ " ,ID_categoria)"
+				+ "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			bd.getConnection();
+			bd.st=bd.con.prepareStatement(sql);
+			bd.st.setFloat(1, 5);
+			bd.st.setString(2," jose@ma1ria.com");
+			bd.st.executeUpdate(sql);
+		}catch(SQLException erro){
+			System.out.println(erro.toString());
+		}
+		
+		
+		
+		
+		
+	
+	}
+
+
+}

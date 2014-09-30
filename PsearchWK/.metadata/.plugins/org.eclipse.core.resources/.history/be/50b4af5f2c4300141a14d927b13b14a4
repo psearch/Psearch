@@ -1,0 +1,266 @@
+<%@page import="controller.PessoaDao"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="banco.BD"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<style>
+html, body, #map-canvas {
+	height: 30%;
+	position: relative;
+	margin: 0px;
+	padding: 0px
+}
+
+#map-canvas {
+	margin-top: -13%;
+	margin-left: 60%;
+}
+</style>
+<meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css" href="_css/estilo.css" />
+
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+<script
+	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDfmXMCQ3dfJKd_wAKe4Gh0_JmgJNKD_EY&sensor=SET_FALSE"></script>
+
+<script>
+	var geocoder;
+	var map;
+	function initialize() {
+		geocoder = new google.maps.Geocoder();
+		var latlng = new google.maps.LatLng(-34.397, 150.644);
+
+		var mapOptions = {
+			zoom : 100,
+
+			center : new google.maps.LatLng(-23.5505199, -46.63330939999997),
+
+		};
+
+		map = new google.maps.Map(document.getElementById('map-canvas'),
+				mapOptions);
+
+	}
+
+	function codeAddress() {
+
+		var address = document.getElementById('address').value;
+		geocoder.geocode({
+			'address' : address
+		}, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				map.setCenter(results[0].geometry.location);
+
+				marker = new google.maps.Marker({
+					map : map,
+					position : results[0].geometry.location
+
+				});
+
+				google.maps.event.addListener(marker, 'click', function() {
+					infowindow.open(map, marker);
+				});
+
+			}
+
+			else {
+				alert('Erro ao obter coordenadas ' + status + geocoder);
+			}
+		});
+
+	}
+	function loadXMLFile() {
+		var filename = 'pontos.xml';
+		$.ajax({
+			type : "GET",
+			url : filename,
+			dataType : "xml",
+			success : parseXML,
+			error : onXMLLoadFailed
+		});
+
+		function onXMLLoadFailed() {
+			alert("Ocorreu um erro durante a execução");
+		}
+
+		function parseXML(xml) {
+			var markers = [];
+
+			var latlngbounds = new google.maps.LatLngBounds();
+			var bounds = new google.maps.LatLngBounds();
+			$(xml).find("ocorrencia").each(
+					function() {
+
+						var nme = $(this).find('Name').text();
+
+						var lat = $(this).find('Latitude').text();
+						var lng = $(this).find('Longitude').text();
+						var markerCoords = new google.maps.LatLng(
+								parseFloat(lat), parseFloat(lng));
+
+						var contentString = '<div id="content">' + lat + lng
+								+ '</div>';
+
+						var infowindow = new google.maps.InfoWindow({
+							content : contentString
+						});
+
+						var marker = new google.maps.Marker({
+							position : markerCoords,
+							map : map
+
+						});
+
+						google.maps.event.addListener(marker, 'click',
+								function() {
+									infowindow.open(map, marker);
+								});
+
+						map.setCenter(markerCoords);
+
+					});
+
+		}
+
+	}
+
+	google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+
+
+
+
+
+<title>PSearch</title>
+</head>
+<body>
+	<div id="tudo">
+
+		<header id="topo"> </header>
+
+		<article id="conteudo">
+
+			<form id="formulario" action="actionCadastrojsp.jsp">
+
+
+				<p>Nome/Razão Social: <input name="nome" type="text"
+					value="" size="30"/> </p>
+			
+					
+				<p>E-mail: <input
+					type="email" name="email" size="30" maxlength="50" />
+					
+					Telefone:
+				<input type="text" id="telefone" name="tel" size="30" maxlength="50" /></p>
+				
+				
+					
+					<p>Rua: <input type="text" id="rua"
+					name="rua" size="30" maxlength="50" />
+					
+						
+				Numero: <input
+					type="text" id="numero" name="num" size="30" maxlength="50" />
+					
+					Bairro: <input type="text" id="bairro" name="bairro" size="30"
+					maxlength="50" /> CEP: <input type="text" id="cep" name="cep"
+					size="30" maxlength="50" />
+					
+					Estado:<select id='estado' name='estado'>
+					<%
+					BD bd = new BD();
+						bd.getConnection();
+						String sqluf = "select ds_uf_sigla from uf";
+						bd.st = bd.con.prepareStatement(sqluf);
+						bd.rs = bd.st.executeQuery();
+						while (bd.rs.next()) {
+							out.println("<option value =" + bd.rs.getString("ds_uf_sigla")
+									+ ">" + bd.rs.getString("ds_uf_sigla") + "</option>");
+						}
+					%>
+</select>
+				
+					
+				Cidade: <input
+					type="text" id="cidade" name="cidade" size="30" maxlength="50" /></p>
+				
+					<p>	 País: <input type="text"
+					id="pais" name="pais" size="30" maxlength="50" />
+					</p>
+					
+					
+					
+				
+					
+					<p>Profissão: <select action="cadastro.jsp" name="profissao">
+					<option>Selecione uma profissão</option>
+
+
+					<%
+					
+						bd.getConnection();
+						String sql = "select descricao from categoria_prof";
+						bd.st = bd.con.prepareStatement(sql);
+						bd.rs = bd.st.executeQuery();
+						while (bd.rs.next()) {
+
+							out.println("<option value=" + bd.rs.getString("descricao")
+									+ ">" + bd.rs.getString("descricao") + "</option>");
+						}
+					%>
+
+
+
+
+				</select></p>
+					
+					
+					
+					<p>
+				Senha: <input type="password" name="senha" size="30" maxlength="50" />
+				
+				 Confirmar Senha: <input type="password" name="Csenha" size="30"
+					maxlength="50" /> <input id="address"
+					style="visibility: hidden" type="textbox">:
+					</p>
+				<!-- Campo escondido que junta os dados do endereco -->
+				<p>
+				. <input type="text" id="teste" style="visibility: hidden"
+					name="teste">:
+				<!-- campo escondido que armazena latitude e longitude -->
+				. <input type="submit" value="cadastrar" /> <input type="reset"
+					value="limpar">
+				
+				</p>
+					
+					
+			</form>
+
+
+
+<table>
+		<tr><td>	<div id="map-canvas"></div></td></tr>
+
+			<tr><td><button id="btverificar" onclick="codeAddress()">Verificar endereço</button></td></tr>
+</table>
+		</article>
+
+		<footer id="rodape">
+
+			<a href="inicio.html">Início</a> <a href="ranking.html">Ranking</a> <a
+				href="sobreNos.html">Sobre Nós</a> <a href="faleConosco.html">Fale
+				Conosco</a>
+
+		</footer>
+
+	</div>
+
+</body>
+</html>

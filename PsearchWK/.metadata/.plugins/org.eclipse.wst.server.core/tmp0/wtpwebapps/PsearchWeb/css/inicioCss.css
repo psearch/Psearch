@@ -1,0 +1,202 @@
+
+@@import url(http://fonts.googleapis.com/css?family=Quicksand);
+
+html {
+	overflow-x:hidden;
+	overflow-y:hidden;
+	width: 100%;
+	height: 100%;
+}
+
+body#page {
+	font-family: 'Quicksand', serif;
+}
+
+div#imagem {
+	width: 1366px;
+	height: 700px;
+	background-image: url("../_imagens/Logo.png");
+	background-repeat: no-repeat;
+	position: relative;
+	display: block;
+	top:-11%;
+	margin-left: auto;
+	margin-right: auto;
+	left: 1.5%;
+
+}
+
+.conteudo {
+
+	display: inline;
+	position: relative, absolute;
+	margin-top: -5%;
+	width: 410px;
+	height: 100px;
+	margin-left:auto;
+	margin-right:auto;
+
+}
+
+button.btn.btn-6.btn-6b {
+	position: relative;
+	display:block;
+	top:25em;
+	margin-left:auto;
+	margin-right:auto;
+
+}
+
+button#btni.Btn.Btn-2.Btn-2a{
+	border: 2px solid #ffffff;
+	color: #ffffff;
+	position: relative;
+	display:block;
+	top:-28em;
+	left: 70em;
+
+}
+
+button#btni.Btn-2a:hover {
+	color: #333333;
+	background: #ffffff;
+}
+
+button#btnM.Bttn.Bttn-3.Bttn-3a {
+	border: 1px solid #333333;
+	color: #333333;
+	position: relative;
+	display:block;
+	margin-right: auto; 
+	margin-left: auto;
+	top: 17%;
+}
+
+button#btnM.Bttn-3:hover {
+	background: transparent;
+	color: #333333;
+	background: #ffffff;
+}
+
+input#style {
+	border: 1px solid #bdbdbd;
+	position: relative;
+	padding: 15px;
+	padding-left: 5%;
+	padding-right: 20%;
+	top: 2.5em;
+	left: 5%;
+	margin-right: auto;
+	margin-left: auto;
+
+}
+
+input#style option{
+	color: #ffffff;
+	font-size: 12px;
+}
+
+select#style2 {
+	border: 1px solid #bdbdbd;
+	position: relative;
+	padding: 15px;
+	padding-left: 47%;
+	top: 3.5em;
+	left: 5%;
+	margin-right: auto;
+	margin-left: auto;
+
+}
+
+select#style option{
+	color: #ffffff
+}
+
+div#Modalbusca {
+	display: none;
+	background-color: #ffffff;
+	position: relative;
+	width: 300px;
+	height: 330px; 
+	margin-top: -4%;
+	margin-left: auto;
+	margin-right: auto;
+	-webkit-box-shadow: 0px 5px 15px 0px rgba(50, 50, 50, 0.9);
+	-moz-box-shadow: 0px 5px 15px 0px rgba(50, 50, 50, 0.9);
+	box-shadow: 0px 5px 15px 0px rgba(50, 50, 50, 0.9);
+
+}
+
+div#ModalCab {
+	background-color: #333333;
+	position: relative;
+	width: 300px;
+	height: 90px;
+	padding: 0px;
+	margin-left: auto; 
+	margin-right: auto;
+
+}
+
+.modalImage {
+	position: relative;
+	top: 15%;
+	left: 38.5%;
+	margin-left: auto;
+	margin-right: auto;
+
+}
+
+.textbox { 
+    background: #FFF url(images/posicao.png) no-repeat 4px 4px; 
+    border: 1px solid #999; 
+
+  } 
+.selectbox {
+	background: #FFF url(images/proficao.png) no-repeat 4px 4px; 
+    border: 1px solid #999; 
+	
+}
+
+div#cabecalho {
+	position: relative;
+	width: 1250px;
+	height: 9.5em;
+	left: 3.5em;
+}
+
+div#cabecalho .login {
+	position: relative;
+	top: -27em;
+	left: 45%;
+}
+
+span#saibamais a {
+	position: relative;
+	color: #ffffff;
+	font-family: 'Quicksand', serif;
+	font-size: 20px;
+	text-decoration: none;
+	top: -31em;
+	left: 45%;top: -31em;
+	left: 45%;top: -31em;
+	left: 45%;
+	cursor: pointer;
+}
+
+.logo {
+	position: relative;
+	bottom: 8.7em;
+}
+
+div#linha{
+	background-color: #ffffff;
+	position: relative;
+	width: 980px;
+	height: 2.5px;
+	top: 1.5em;
+	margin-right: auto;
+	margin-left: auto;
+	border-radius: 0px, 0px, 10px, 10px;
+
+}

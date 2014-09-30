@@ -1,0 +1,363 @@
+<%@page import="java.sql.SQLException"%>
+<%@page import="banco.BD"%>
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<link rel='stylesheet' type='text/css' href='_css/stars.css'>
+
+<meta http-equiv="Cache-control" content="public">
+<meta http-equiv="Cache-control" content="private">
+<meta http-equiv="Cache-control" content="no-cache">
+<meta http-equiv="Cache-control" content="no-store">
+
+
+
+<title>PSearch</title>
+
+<style type="text/css">
+<%@include file="_css/map.css" %>
+</Style>
+
+
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+<script
+	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDfmXMCQ3dfJKd_wAKe4Gh0_JmgJNKD_EY&sensor=SET_FALSE"></script>
+	
+	
+ <script type="text/javascript" src="_javascript/jquery.js"></script>
+<script>
+
+
+function scrool() {
+    document.getElementById("ranking").style.overflow = "scroll";
+}
+
+	function rodar() {
+		document.f.oculto.value = document.f.pro.value;
+	}
+	
+	
+
+	var geocoder;
+	var map;
+
+	function initialize() {
+		var styles = [ {
+			stylers : [ {
+				hue : "#000099"
+			}, {
+				saturation : -30
+			} ]
+		}, {
+			featureType : "road",
+			elementType : "geometry",
+			stylers : [ {
+				lightness : 100
+			}, {
+				visibility : "simplified"
+			} ]
+		}, {
+			featureType : "road",
+			elementType : "labels",
+			stylers : [ {
+				visibility : "on"
+			} ]
+		} ];
+
+		var styledMap = new google.maps.StyledMapType(styles, {
+			name : "Styled Map"
+		});
+
+		geocoder = new google.maps.Geocoder();
+		var latlng = new google.maps.LatLng(-34.397, 150.644);
+
+		var mapOptions = {
+			zoom : 16,
+			  panControl: false,
+			  zoomControlOptions: {
+			        style: google.maps.ZoomControlStyle.LARGE,
+			        position: google.maps.ControlPosition.LEFT_CENTER
+			    },
+			center : new google.maps.LatLng(-23.5505199, -46.63330939999997),
+
+		};
+
+		map = new google.maps.Map(document.getElementById('map-canvas'),
+				mapOptions);
+		map.mapTypes.set('map_style', styledMap);
+		map.setMapTypeId('map_style');
+	}
+
+	function codeAddress() {
+
+		var address = document.getElementById('address').value;
+		geocoder.geocode({
+			'address' : address
+		}, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				map.setCenter(results[0].geometry.location);
+
+				marker = new google.maps.Marker({
+					icon : "_img/iconuser.png",
+					map : map,
+					animation : google.maps.Animation.DROP,
+					position : results[0].geometry.location
+
+				});
+
+				google.maps.event.addListener(marker, 'click', function() {
+					infowindow.open(map, marker);
+				});
+
+			}
+
+			else {
+				alert('Erro ao obter coordenadas ' + status + geocoder);
+			}
+		});
+
+	}
+	function loadXMLFile() {
+		var filename = 'pontos.xml';
+		$.ajax({
+			type : "GET",
+			url : filename,
+			dataType : "xml",
+			success : parseXML,
+			error : onXMLLoadFailed
+		});
+
+		function onXMLLoadFailed() {
+			alert("Ocorreu um erro durante a execução");
+		}
+
+		function parseXML(xml) {
+			var markers = [];
+
+			var latlngbounds = new google.maps.LatLngBounds();
+			var bounds = new google.maps.LatLngBounds();
+			$(xml)
+					.find("ocorrencia")
+					.each(
+							function() {
+
+								var nme = $(this).find('Name').text();
+
+								var lat = $(this).find('Latitude').text();
+								var lng = $(this).find('Longitude').text();
+								var markerCoords = new google.maps.LatLng(
+										parseFloat(lat), parseFloat(lng));
+								var rua = $(this).find('endereco').text();
+								
+								var email = $(this).find('mail').text();
+
+								var tel = $(this).find('telefone').text();
+								var pro = $(this).find('Profissao').text();
+								
+								var contentString = '<div id="iw-container"><header id="divisoria"></header><header class="iw-title"><b >'+nme+" - "+pro+'</b></header><div  id="cont" id="content"><form  action="actionAvaliacao.jsp" method="get"> <table ></tr></td><tr><td  linhaspan="6"></tr></td>'
+									
+									
+										+ '</td></tr><tr><td class="tabless"><b>Endereço:</b> '
+										+ rua
+										+ '</td></tr><tr><td class="tabless"><b>Email:</b>'+email
+										+ '</tr></td>'
+										+ '</td></tr><tr><td class="tabless"><b>Telefone:</b>'+tel
+										+ '</tr></td>'
+										+'<tr><td class="tabless"><input  style="display: none" name="mailOculto" value= '
+											+ email
+											+ '/></td></tr>'+
+											+'<tr><td>Media:</tr></td>'
+											'<tr><td class="tabless"><input style="display: none" name="nomelOculto" value= '
+											+ nme
+											+ '></td></tr><tr><td></td></tr></table>'
+											
+											+'<fieldset class="rating">'
+											+'<input type="radio" name="stars" id="4_stars" value="5" >'
+											+'<label class="stars" for="4_stars">4 stars</label>'
+											+'<input type="radio" name="stars" id="3_stars" value="4" >'
+											+'<label class="stars" for="3_stars">3 stars</label>'
+											+'<input type="radio" name="stars" id="2_stars" value="3" >'
+											+'<label class="stars" for="2_stars">2 stars</label>'
+											+'<input type="radio" name="stars" id="1_stars" value="2" >'
+											+'<label class="stars" for="1_stars">1 star</label>'
+											+'<input type="radio" name="stars" id="0_stars" value="1" required>'
+											+'<label class="stars" for="0_stars">0 star</label> '
+											+'<input  type="submit"  class="btnvotar"  value= Avaliar>'							
+										+'</fieldset> '
+											'</form>';
+
+								var infowindow = new google.maps.InfoWindow({
+									content : contentString,
+
+								});
+
+								var marker = new google.maps.Marker({
+
+									animation : google.maps.Animation.DROP,
+									position : markerCoords,
+									title : nme,
+									icon : "_img/proficon.png",
+
+									map : map
+
+								});
+
+								google.maps.event.addListener(marker, 'click',
+										function() {
+									 
+									
+											infowindow.open(map, marker);
+
+										});
+								
+								
+								google.maps.event.addListener(infowindow, 'domready', function() {
+
+									   // Referência ao DIV que agrupa o fundo da infowindow
+									   var iw_outer = $('.gm-style-iw');
+
+									// Referência ao DIV que agrupa o fundo da infowindow
+									    var iw_outer = $('.gm-style-iw');
+
+									    // Referencia aos DIV para os cantos e para a seta(cauda) da infowindow
+									    var iw_corners_tail = iw_outer.prev();
+
+									    // Referência ao DIV que agrupa os elementos do botão fechar
+									    var iw_btnClose = iw_outer.next();
+
+									    // Retira o espaço da esquerda e do topo
+									    iw_outer.css({left: '0', top: '0', width: '100%'});
+
+									   
+
+									   
+									
+
+									    // Aplica 10px de raio para os cantos inferiores da sombra
+									    // Altera a cor desejada para a sombra 
+									    iw_corners_tail.children(':nth-child(2)').css({'border-bottom-left-radius': '10px', 'border-bottom-right-radius': '10px', 'background-color': 'rgba(72, 181, 233, 0.4)'});
+
+									    // Aplica 10px de raio para os cantos inferiores do fundo 
+									    iw_corners_tail.children(':nth-child(4)').css({'border-bottom-left-radius': '10px', 'border-bottom-right-radius': '10px'});
+
+								
+							
+
+									    // Aplica o efeito desejado ao botão fechar
+									    iw_btnClose.css({opacity: '1', right: '-12px', top: '-12px', border: '7px solid #D91E41', 'box-shadow': '0 0 5px #3990B9'});
+
+
+									});
+
+								map.setCenter(markerCoords);
+
+							});
+
+		}
+
+		function setDescPro() {
+
+		}
+
+	}
+
+	google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+</head>
+<body  onload="loadXMLFile();scrool()">
+
+
+
+	<header id="panel">	
+	
+
+
+
+
+	
+		<input placeholder="Rua,estado,cidade"  id="address" class="inputs" type="text"/> 
+		
+		<input id="btloc"  class="button"  type="submit"
+			value="Minha Localização" onclick="codeAddress();reload()"/>
+
+
+			<input  style="visibility: hidden" type="text" name="oculto">
+		
+			<form id="formlocpro" action="xmlcreate_map.jsp" method="get">
+			<select  name="profissao" class="combobox"
+				onchange="rodar()">
+				<option value="ola mundo">Selecione uma profissão</option>
+
+
+				<%
+					BD bd = new BD();
+					bd.getConnection();
+					String sql = "select descricao from categoria_prof ";
+					bd.st = bd.con.prepareStatement(sql);
+					bd.rs = bd.st.executeQuery();
+					while (bd.rs.next()) {
+
+						out.println("<option value=" + bd.rs.getString("descricao")
+								+ ">" + bd.rs.getString("descricao") + "</option>");
+						
+					}
+					bd.close();
+				%>
+
+			</select>
+			<input id="btpro" class="button"  type="submit"
+			value="Localizar Profissionais" >
+		
+		</form>
+	
+		</header>
+			<input style="visibility: hidden" action="map.jsp" method="get" type='submit'
+			value="localizar profissionais" onclick="loadXMLFile()">
+
+        	<div  class="CSSTableGenerator"  id="table">
+        	 <table >
+        	
+               
+             
+                    <tr >
+                        <td id="titulo">
+                         Top 10 de aceitação
+                        </td>
+                    </tr>
+                    
+                    <% 
+        	try{
+        	bd.getConnection();
+     	String selectRanking = "select nome_razsocial, sum(valor_avaliacao) as valor from pessoa,avaliacao where avaliacao.email_pessoa = pessoa.email group by nome_razsocial order by valor desc";
+					
+                    bd.st=bd.con.prepareStatement(selectRanking);
+                    bd.rs=bd.st.executeQuery();
+                    
+                    int i=1;
+                    while(bd.rs.next()){
+                    	
+                    	out.println("<tr><td>"+i+"º"+bd.rs.getString("nome_razsocial")+"</td></td>");
+                    	i=i+1;
+                    }
+                    
+                    
+        	}catch(SQLException erro){
+        	System.out.println(erro.toString());
+        	}
+        	%>             
+                    </table>
+            </div>
+        
+        
+   
+	<div id="map-canvas">
+
+</div>
+</body>
+</html>
+
